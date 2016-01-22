@@ -49,7 +49,7 @@ configure-stamp:
 		--with-dlz-filesystem=yes \
 		--with-dlz-ldap=yes \
 		--with-dlz-stub=yes \
-		--with-geoip=/usr \
+		--with-geoip=no \
 		--enable-ipv6 \
 		$(EXTRA_FEATURES)
 
