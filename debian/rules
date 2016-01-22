@@ -58,7 +58,7 @@ configure-stamp:
 build: configure-stamp build-stamp
 build-stamp:
 	dh_testdir
-	LD_LIBRARY_PATH=$$(pwd)/lib/isc/.libs:$$(pwd)/lib/isccc/.libs:$$(pwd)/isccfg/.libs:$${LD_LIBRARY_PATH} $(MAKE)
+	LD_LIBRARY_PATH=$$(pwd)/lib/isc/.libs:$$(pwd)/lib/isccc/.libs:$$(pwd)/isccfg/.libs:$(shell find lib -name '.libs'):$${LD_LIBRARY_PATH} $(MAKE)
 	touch build-stamp
 
 autofiles:
@@ -165,6 +165,16 @@ binary-arch: build install
 	dh_fixperms -a
 	dh_makeshlibs -a
 	dh_installdeb -a
+	/usr/bin/install -c lib/isc/.libs/libisc.so.160.0.0 debian/bind9/usr/lib/libisc.so.160.0.0
+	ln -s libisc.so.160.0.0 debian/bind9/usr/lib/libisc.so.160
+	/usr/bin/install -c lib/isccc/.libs/libisccc.so.140.0.3T debian/bind9/usr/lib/libisccc.so.140.0.3
+	ln -s libisccc.so.140.0.3 debian/bind9/usr/lib/libisccc.so.140
+	/usr/bin/install -c lib/isccfg/.libs/libisccfg.so.140.3.0T debian/bind9/usr/lib/libisccfg.so.140.3.0
+	/usr/bin/install -c lib/dns/.libs/libdns.so.161.1.0T debian/bind9/usr/lib/libdns.so.161.1.0 
+	/usr/bin/install -c lib/bind9/.libs/libbind9.so.140.0.10T debian/bind9/usr/lib/libbind9.so.140.0.10
+	/usr/bin/install -c lib/lwres/.libs/liblwres.so.141.0.3 debian/bind9/usr/lib/liblwres.so.141.0.3 
+	/usr/bin/install -c lib/irs/.libs/libirs.so.141.0.4 debian/bind9/usr/lib/libirs.so.141.0.4
+	ln -s libirs.so.141.0.4 debian/bind9/usr/lib/libirs.so.141
 	dh_shlibdeps -l"debian/libbind9-60/usr/lib:debian/libbind-dev/usr/lib:debian/libdns69/usr/lib:debian/libisc62/usr/lib:debian/libisccc60/usr/lib:debian/libisccfg62/usr/lib:debian/liblwres60/usr/lib:/usr/lib/libfakeroot" -a
 	for i in $$(sed -n '/^Package:/s/^.* //p' debian/control); do cat debian/vars.in >> debian/$$i.substvars; done
 	cat debian/vars.in >> debian/substvars
@@ -174,3 +184,4 @@ binary-arch: build install
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install configure
+

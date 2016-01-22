@@ -1,3 +1,9 @@
+bind9 (1:9.10~squeeze) squeeze-updates; urgency=low
+
+  * Ported upstream (isc) 9.10 release.
+
+ -- Mihail Vasiliev <mick@corp.linkintel.ru>  Fri, 22 Jan 2016 15:52:00 +0300
+
 bind9 (1:9.7.3.dfsg-1~squeeze9) squeeze-proposed-updates; urgency=low
 
   * Update db.root with new IP for D.root-servers.net.  Closes: #697352
